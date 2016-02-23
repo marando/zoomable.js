@@ -1,7 +1,10 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=yes">  
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="../zoomable.min.js"></script>
+    <script src="../zoomable.js"></script>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
@@ -164,6 +167,7 @@
 			<section class="row">
 				<div class="col-sm-12">
 					<h1>Documentation</h1>
+					<h2>Options</h2>
 					<table class="table table-bordered table-striped">
 						<tr>
 							<th>Property</th>
@@ -205,7 +209,26 @@
 							<td><code>200</code></td>
 							<td>speed of fade transitions</td>
 						</tr>						
-					</table>				
+					</table>	
+
+					<h2>Callbacks</h2>			
+					<table class="table table-bordered table-striped">
+						<tr>
+							<th>Property</th>
+							<th>Type</th>						
+							<th>Description</th>
+						</tr>
+						<tr>
+							<td><kbd>onshow</kbd></td>
+							<td>function</td>
+							<td>to be called when the image is shown</td>
+						</tr>
+						<tr>
+							<td><kbd>onhide</kbd></td>
+							<td>function</td>
+							<td>to be called when the image is hidden/dismissed.</td>
+						</tr>
+					</table>
 				</div>				
 			</section>
 
@@ -217,7 +240,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-6">
-						<div class="footer-header">zoomable.js</div>
+						<div class="footer-header">zoomable.js</div>						
 						<div class="footer-text">&copy; 2015 Ashley Marando</div>
 					</div>
 					<div class="col-sm-6">

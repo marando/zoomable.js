@@ -1,14 +1,68 @@
-jQuery.fn.zoomable = function(options) {
+(function( $ ) {
 
-  // Do for each element
-  $(this).each(function() {
+  jQuery.fn.zoomable = function(options) {
 
-    // Initialize options
-    options = initOptions(options, $(this));
+    // Do for each element
+    $(this).each(function() {
 
-    // Preload images
-    $('<img/>').src = options.fullsize;
+      // Initialize options
+      options = initOptions(options, $(this));
 
+      // Preload images
+      $('<img/>').src = options.fullsize;
+
+      // Create components
+      var img       = createImgComponent(options);
+      var container = createContainerComponent(options, img);
+
+      // Thumb click event (shows full size image)
+      $(this).click(function() {
+        container.appendTo('body').fadeIn(options.speed, options.onshow);
+        // Check if blur was specified
+        if (options.blur && options.blur != '0' && options.blur != '0px') {
+          // Blur in
+          animateBlur(this, 0, options.blur, options.speed);
+        }
+        // Disable body scrolling
+        $('html, body').css({
+          'overflow': 'hidden',
+        });
+      });
+
+      // Container click event (dismiss full size image)
+      container.click(function() {
+        $(this).fadeOut(options.speed, options.onhide);
+        // Check if blur was specified
+        if (options.blur && options.blur != '0' && options.blur != '0px') {
+          // Blur in
+          animateBlur(this, options.blur, 0, options.speed);
+        }
+        // Enable body scrolling
+        $('html, body').css({
+          'overflow': 'auto',
+        });
+      });
+
+    });
+
+  };
+
+  function initOptions(options, parent) {
+    // Use default options if none were passed on call
+    options = $.extend({}, $.fn.zoomable.defaults, options);
+
+    if (parent.attr('fullsize')) {
+      // Use the image's fullsize attribute
+      options.fullsize = parent.attr('fullsize');
+    } else {
+      // Use the image's source
+      options.fullsize = parent.attr('src');
+    }
+
+    return options;
+  }
+
+  function createImgComponent(options) {
     // Initialize the fullsize image
     var img = $('<img />', {
       'src': options.fullsize,
@@ -22,8 +76,12 @@ jQuery.fn.zoomable = function(options) {
       'border': options.border,
       'border-radius': options.radius,
       'box-shadow': options.shadow,
-    });
+    });  
+    
+    return img;  
+  }  
 
+  function createContainerComponent(options, img) {
     // Initialize the container for the fullsize image
     var container = $('<div />', {
       'class': 'zoomable-container',
@@ -40,91 +98,50 @@ jQuery.fn.zoomable = function(options) {
       'height': '100%',
       'width': '100%',
       'display': 'none',
-    });
+    });  
 
-    // Apply the opacity to the container
+    // Apply the opacity to the container's color using alpha
     container.css({
       'background-color': container.css('background-color')
         .replace('rgb', 'rgba')
         .replace(')', '') + ', ' + options.opacity + ')'
-    });
-
-    // Container click event (dismiss full size image)
-    container.click(function() {
-      $(this).fadeOut(options.speed);
-
-      var blurNoPx = options.blur.replace('px', '');
-      $({blurRadius: blurNoPx}).animate({blurRadius: 0}, {
-        duration: options.speed,
-        easing: 'swing', // or "linear"
-        // use jQuery UI or Easing plugin for more options
-        step: function() {
-          $('.container').css({
-            "-webkit-filter": "blur(" + this.blurRadius + "px)",
-            "filter": "blur(" + this.blurRadius + "px)"
-          });
-        }
-      });
-
-      // Enable body scrolling
-      $('html, body').css({
-        'overflow': 'auto',
-        'height': 'auto'
-      });
-    });
-
-    // Thumb click event (shows full size image)
-    $(this).click(function() {
-      container.appendTo('body').fadeIn(options.speed);
-      $({blurRadius: 0}).animate({blurRadius: options.blur}, {
-        duration: options.speed,
-        easing: 'swing', // or "linear"
-        // use jQuery UI or Easing plugin for more options
-        step: function() {
-          $('.container').css({
-            "-webkit-filter": "blur(" + this.blurRadius + "px)",
-            "filter": "blur(" + this.blurRadius + "px)"
-          });
-        }
-      });
-
-      // Disable body scrolling
-      $('html, body').css({
-        'overflow': 'hidden',
-        'height': '100%'
-      });
-    });
-
-  });
-
-};
-
-function initOptions(options, parent) {
-  // Use default options if none were passed on call
-  options = $.extend({}, $.fn.zoomable.defaults, options);
-
-  if (parent.attr('fullsize')) {
-    // Use the image's fullsize attribute
-    options.fullsize = parent.attr('fullsize');
-  } else {
-    // Use the image's source
-    options.fullsize = parent.attr('src');
+    });    
+    
+    return container;  
   }
 
-  return options;
-}
+  function animateBlur(elem, startSize, endSize, speed) {    
+    startSize = startSize.replace('px', '');
+    $({blurRadius: startSize}).animate({blurRadius: endSize}, {
+      duration: speed,
+      easing: 'swing', // or "linear"
+      // use jQuery UI or Easing plugin for more options
+      step: function() {
+        $('.container').css({
+          "-webkit-filter": "blur(" + elem.blurRadius + "px)",
+          "filter": "blur(" + elem.blurRadius + "px)"
+        });
+      }
+    });
+  }
 
-// Plugin defaults – added as a property on our plugin function.
-$.fn.zoomable.defaults = {
-  padding: '30px',
-  bgcolor: 'hsla(0, 4%, 3%, 0.75)',
-  //opacity: 1 - 0.61803399,
-  //bgcolor: $('body').css('background-color'),
-  //opacity: '0.61803399',
-  blur: '0px',
-  speed: 300,
-  border: '1px solid hsl(0, 4%, 17%)',
-  radius: '2px',
-  shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
+  // Plugin defaults – added as a property on our plugin function.
+  $.fn.zoomable.defaults = {
+    // Properties
+    padding: '15px',
+    bgcolor: 'hsl(0, 4%, 3%)',
+    //opacity: 1 - 0.61803399,
+    //bgcolor: $('body').css('background-color'),
+    opacity: '0.75',
+    blur: '0px',
+    speed: 250,
+    border: '1px solid hsl(0, 4%, 17%)',
+    radius: '2px',
+    shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
 
-};
+    // Events
+    onshow: function() { },
+    onhide: function() { },
+  };
+
+})( jQuery );
