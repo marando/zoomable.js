@@ -1,55 +1,169 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>Zoomable.js by marando</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="../zoomable.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="prism/prism.css">
+    <script src="prism/prism.js"></script>
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Zoomable.js</h1>
-      <h2 class="project-tagline">A is a simple way to zoom images with jQuery.</h2>
-      <a href="https://github.com/marando/zoomable.js" class="btn">View on GitHub</a>
-      <a href="https://github.com/marando/zoomable.js/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/marando/zoomable.js/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+		<div class="container">
+			<div class="page-header">
+		  	<h1>zoomable.js <small>examples</small></h1>
+			</div>
 
-    <section class="main-content">
-      <p>`<code>### Welcome to GitHub Pages.
-This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here [using GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/), select a template crafted by a designer, and publish. After your page is generated, you can check out the new</code>gh-pages` branch locally. If you’re using GitHub Desktop, simply sync your repository and you’ll see the new branch.</p>
+			<p class="lead">
+				zoomable.js is a simple way to zoom images with jQuery.
+			</p>
 
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Designer Templates</h3>
+			<div class="row">					
+				<div class="example simple">
+					<h2 class="col-sm-12">Basic Example</h2>
+					<p class="col-sm-12">
+						In the below example the zoomable plugin is applied to all <code>&lt;img&gt;</code> elements on the page. The plugin will use each element's <code>src</code> tag as the full-size image.
+					</p>						
+					<div class="col-sm-5">					
+						<img src="http://lorempixel.com/1200/800/?r=1" 
+								 class="thumb simple">		
+						<script type="text/javascript">
+							$(document).ready(function() {
+								$('img.simple').zoomable();
+							});
+						</script>						 
+					</div>
+					<div class="col-sm-7">
+						<pre>
+							<code class="language-html">
+								&ltimg src="image.jpg"&gt;
+							</code>
+						</pre>
+						<pre>
+							<code class="language-javascript">
+								$(document).ready(function() {
+									$('img').zoomable();
+								});
+							</code>
+						</pre>						
+					</div>				
+				</div>
+			</div>
 
-<p>We’ve crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
+			<div class="row">			
+				<div class="example custom">
+					<h2 class="col-sm-12">Custom Example</h2>
+					<p class="col-sm-12">
+						In this example the zoomable plugin is applied to an image of a specific class, and custom plugin options are passed in the jQuery functin call to change the zoomed appearance.
+					</p>						
+					<div class="col-sm-5">
+						<img src="http://lorempixel.com/1200/800/?r=2" 
+								 class="thumb custom">		
+						<script type="text/javascript">
+							$(document).ready(function() {
+								$('img.custom').zoomable({
+									padding: '120px',
+									bgcolor: 'hsl(240, 12%, 24%)',
+									opacity: 0.9,
+									blur:    '7px',
+									speed:   800,
+									border:  '23px solid #000',
+									radius:  '23px',
+									shadow:  '0 0 23px #000',
+								});
+							});
+						</script>						 
+					</div>
+					<div class="col-sm-7">
+						<pre>
+							<code class="language-html">
+								&ltimg src="image.jpg" class="custom"&gt;
+							</code>
+						</pre>
+						<pre>
+							<code class="language-javascript">
+								$(document).ready(function() {
+									$('img.custom').zoomable({
+										padding: '120px',
+										bgcolor: '#000000',
+										opacity: 0.5,
+										blur:    '7px',
+										speed:   800,
+										border:  '23px solid #000',
+										radius:  '23px',
+										shadow:  '0 0 23px #000',
+									});
+								});
+							</code>
+						</pre>						
+					</div>				
+				</div>
+			</div>
 
-<h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating pages manually</h3>
+			<div class="row">					
+				<div class="example simple">
+					<h2 class="col-sm-12">Alternage Full Size Image</h2>
+					<p class="col-sm-12">
+						You can specify an alternate full size image to load by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> tag:
+					</p>						
+					<div class="col-sm-5">					
+						<img src="http://lorempixel.com/1200/800/?r=3" 
+								 fullsize="http://lorempixel.com/1200/800/?r=3" 
+								 class="thumb simple">		
+						<script type="text/javascript">
+							$(document).ready(function() {
+								$('img.fullsize').zoomable();
+							});
+						</script>						 
+					</div>
+					<div class="col-sm-7">
+						<pre>
+							<code class="language-html">
+								&ltimg src="image.jpg" fullsize="image_full.jpg"&gt;
+							</code>
+						</pre>
+						<pre>
+							<code class="language-javascript">
+								$(document).ready(function() {
+									$('img').zoomable();
+								});
+							</code>
+						</pre>						
+					</div>				
+				</div>
+			</div>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor’s GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/marando/zoomable.js">Zoomable.js</a> is maintained by <a href="https://github.com/marando">marando</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
+		</div>	
   </body>
+
+
+  <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,800,900">
+  <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700">
+  <style type="text/css">
+
+  	body {
+  		font-family: 'Raleway';
+  	}
+  	pre, code {
+  		font-family: 'Roboto Mono' !important;
+  		font-weight: 500;
+  	}
+  	h2 {
+  		font-weight: 500;
+  	}
+  	img.thumb {
+  		width: 100%;
+  		margin-bottom: 15px;
+  		border: 1px solid hsla(0, 4%, 12%, 0.09);
+  		border-radius: 2px;
+  	}
+  	.page-header h1 {
+  		font-weight: 800 !important;
+  	}
+  	pre[class*="language-"] {
+  		margin: 0 0 0.5em !important;
+  	}
+  </style>
+
 </html>
