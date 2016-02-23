@@ -1,5 +1,5 @@
-zoomable.js
-===========
+**zoomable.js**
+===============
 zoomable.js is a simple way to zoom images with jQuery.
 
 ### Demo & Examples
@@ -7,12 +7,12 @@ http://marando.github.io/zoomable.js
 
 
 ### Installation
-
-#### With Bower
+##### Manual
+Just download `zoomable.js` and place it within your project's directory. That's it!
+##### Bower
 ```bash
 $ bower install https://github.com/marando/zoomable.js.git --save
 ```
-
 
 ### Configuration
 
