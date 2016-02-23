@@ -1,8 +1,22 @@
+/*!
+ * zoomable.js
+ * https://github.com/marando/zoomable.js/
+ *
+ * Copyright Ashley Marando
+ * Released under the GNU2 license
+ * 
+ */
+
 (function( $ ) {
 
+  /**
+   * zoomable.js jQuery plugin declaration
+   * 
+   * @param  options  Custom initialization options
+   */
   jQuery.fn.zoomable = function(options) {
 
-    // Do for each element
+    // Process each element
     $(this).each(function() {
 
       // Initialize options
@@ -17,36 +31,46 @@
 
       // Thumb click event (shows full size image)
       $(this).click(function() {
+        // Fade in the container
         container.appendTo('body').fadeIn(options.speed, options.onshow);
+        
         // Check if blur was specified
         if (options.blur && options.blur != '0' && options.blur != '0px') {
           // Blur in
           animateBlur(this, 0, options.blur, options.speed);
         }
-        // Disable body scrolling
-        $('html, body').css({
-          'overflow': 'hidden',
-        });
+
+        // Prevent scrolling when image shown
+        disableBodyScroll();
       });
 
       // Container click event (dismiss full size image)
       container.click(function() {
+        // Fade out the container
         $(this).fadeOut(options.speed, options.onhide);
+        
         // Check if blur was specified
         if (options.blur && options.blur != '0' && options.blur != '0px') {
           // Blur in
           animateBlur(this, options.blur, 0, options.speed);
         }
-        // Enable body scrolling
-        $('html, body').css({
-          'overflow': 'auto',
-        });
+
+        // Re-enable body scrolling once image hidden
+        enableBodyScroll();
       });
 
     });
 
   };
 
+  /**
+   * Uses default plugin options for those that are not passed in.
+   * 
+   * @param  options  User supplied options
+   * @param  parent   Element being processed
+   * 
+   * @return The processed options
+   */
   function initOptions(options, parent) {
     // Use default options if none were passed on call
     options = $.extend({}, $.fn.zoomable.defaults, options);
@@ -62,11 +86,19 @@
     return options;
   }
 
+  /**
+   * Creates the <img> component for the full size image.
+   * 
+   * @param   options  User supplied options
+   * @return           Rendered <img> component 
+   */
   function createImgComponent(options) {
     // Initialize the fullsize image
     var img = $('<img />', {
       'src': options.fullsize,
     })    
+
+    // Set css styling
     img.css({
       'max-height': '100%',
       'max-width': '100%',
@@ -76,17 +108,27 @@
       'border': options.border,
       'border-radius': options.radius,
       'box-shadow': options.shadow,
-    });  
+    });
     
     return img;  
   }  
 
+  /**
+   * Creates a contianer for the fullsize <img> component
+   * 
+   * @param   options  User supplied options
+   * @param   img      Full size <img> component
+   * 
+   * @return  Rendered container containing the <img> component
+   */
   function createContainerComponent(options, img) {
     // Initialize the container for the fullsize image
     var container = $('<div />', {
       'class': 'zoomable-container',
       'html': img,
     });
+
+    // Set css styling
     container.css({
       'background-color': options.bgcolor,
       'padding': options.padding,
@@ -94,11 +136,28 @@
       'position': 'fixed',
       'top': '0',
       'left': '0',
-      'z-index': 9999999,
+      'z-index': 9999999,  // Make sure it's always on top
       'height': '100%',
       'width': '100%',
       'display': 'none',
     });  
+
+    if (options.fill == true) {
+      // Ensure no padding
+      container.css({
+        padding: 0
+      });
+
+      // Remove image from container 
+      container.html('');
+
+      // Set background image
+      container.css({
+        background: 'url(' + options.fullsize + ')', 
+        'background-size': 'cover',
+        'background-position': 'center',
+      });
+    }
 
     // Apply the opacity to the container's color using alpha
     container.css({
@@ -110,6 +169,14 @@
     return container;  
   }
 
+  /**
+   * Applies a blur animation to an element
+   * 
+   * @param   elem       Element to blur
+   * @param   startSize  Starting blur pixel size, e.g. '0px'
+   * @param   endSize    Ending blur pixel size, e.g. '20px'
+   * @param   speed      Speed of the blur transition
+   */
   function animateBlur(elem, startSize, endSize, speed) {    
     startSize = startSize.replace('px', '');
     $({blurRadius: startSize}).animate({blurRadius: endSize}, {
@@ -125,19 +192,38 @@
     });
   }
 
-  // Plugin defaults – added as a property on our plugin function.
+  /**
+   * Disables scrolling on the DOM body and hides the scrollbar
+   */
+  function disableBodyScroll() {
+    // Disable body scrolling
+    $('html, body').css({
+      'overflow': 'hidden',
+    });
+  }
+
+  /**
+   * Enables scrolling on the DOM body and shows the scrollbar
+   */
+  function enableBodyScroll() {
+    // Disable body scrolling
+    $('html, body').css({
+      'overflow': 'auto',
+    });
+  }  
+
+  // Plugin defaults
   $.fn.zoomable.defaults = {
     // Properties
     padding: '15px',
     bgcolor: 'hsl(0, 4%, 3%)',
-    //opacity: 1 - 0.61803399,
-    //bgcolor: $('body').css('background-color'),
     opacity: '0.75',
     blur: '0px',
     speed: 250,
     border: '1px solid hsl(0, 4%, 17%)',
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
+    position: 'default',  // default, fill
 
     // Events
     onshow: function() { },

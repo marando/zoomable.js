@@ -50,9 +50,9 @@
 				<div class="row">					
 					<h1 class="col-sm-12">Examples</h1>
 					<div class="example simple">
-						<h2 class="col-sm-12">Basic Example</h2>
+						<h2 class="col-sm-12">Simple Usage</h2>
 						<p class="col-sm-12">
-							In the below example the zoomable plugin is applied to all <code>&lt;img&gt;</code> elements on the page. The plugin will use each element's <code>src</code> tag as the full-size image.
+							In the below example the plugin is applied to all <code>&lt;img&gt;</code> elements on the page. The plugin will use each element's <code>src</code> property for full-size image.
 						</p>						
 						<div class="col-sm-5">					
 							<img src="http://lorempixel.com/1200/800/?r=1" 
@@ -82,9 +82,9 @@
 
 				<div class="row">			
 					<div class="example custom">
-						<h2 class="col-sm-12">Custom Example</h2>
+						<h2 class="col-sm-12">Custom Options</h2>
 						<p class="col-sm-12">
-							In this example the zoomable plugin is applied to an image of a specific class, and custom plugin options are passed in the jQuery functin call to change the zoomed appearance.
+							In this example the plugin is applied using custom options to change the default appearance:
 						</p>						
 						<div class="col-sm-5">
 							<img src="http://lorempixel.com/1200/800/?r=2" 
@@ -92,13 +92,13 @@
 							<script type="text/javascript">
 								$(document).ready(function() {
 									$('img.custom').zoomable({
-										padding: '120px',
-										bgcolor: 'hsl(240, 12%, 24%)',
+										padding: '60px',
+										bgcolor: 'hsl(0, 1%, 36%)',
 										opacity: 0.9,
-										blur:    '7px',
+										blur:    '10px',
 										speed:   800,
-										border:  '23px solid #000',
-										radius:  '23px',
+										border:  '7px solid #000',
+										radius:  '3px',
 										shadow:  '0 0 23px #000',
 									});
 								});
@@ -114,14 +114,88 @@
 								<code class="language-javascript">
 									$(document).ready(function() {
 										$('img.custom').zoomable({
-											padding: '120px',
-											bgcolor: '#000000',
-											opacity: 0.5,
-											blur:    '7px',
+											padding: '60px',
+											bgcolor: 'hsl(0, 1%, 36%)',
+											opacity: 0.9,
+											blur:    '10px',
 											speed:   800,
-											border:  '23px solid #000',
-											radius:  '23px',
+											border:  '7px solid #000',
+											radius:  '3px',
 											shadow:  '0 0 23px #000',
+										});
+									});
+								</code>
+							</pre>						
+						</div>				
+					</div>
+				</div>
+
+				<div class="row">			
+					<div class="example custom">
+						<h2 class="col-sm-12">Callbacks</h2>
+						<p class="col-sm-12">
+							Two callback functions are exposed&mdash;one for when the image is show, and another for when it is dismissed:
+						</p>						
+						<div class="col-sm-5">
+							<img src="http://lorempixel.com/1200/800/?r=4" 
+									 class="thumb callback">		
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$('img.callback').zoomable({
+										onshow:  function() { alert('image shown') },
+										onhide:  function() { alert('image hidden') },
+									});
+								});
+							</script>						 
+						</div>
+						<div class="col-sm-7">
+							<pre>
+								<code class="language-html">
+									&ltimg src="image.jpg" class="custom"&gt;
+								</code>
+							</pre>
+							<pre>
+								<code class="language-javascript">
+									$(document).ready(function() {
+										$('img.custom').zoomable({
+											onshow:  function() { alert('image shown') },
+											onhide:  function() { alert('image hidden') },
+										});
+									});
+								</code>
+							</pre>						
+						</div>				
+					</div>
+				</div>
+
+				<div class="row">			
+					<div class="example">
+						<h2 class="col-sm-12">Filling the Browser</h2>
+						<p class="col-sm-12">
+							To make an image fill the browser window, set the <code>fill</code> attribute to true:
+						</p>						
+						<div class="col-sm-5">
+							<img src="http://lorempixel.com/1200/800/?r=5" 
+									 class="thumb fill">		
+							<script type="text/javascript">
+								$(document).ready(function() {
+									$('img.fill').zoomable({
+										fill: true
+									});
+								});
+							</script>						 
+						</div>
+						<div class="col-sm-7">
+							<pre>
+								<code class="language-html">
+									&ltimg src="image.jpg" class="custom"&gt;
+								</code>
+							</pre>
+							<pre>
+								<code class="language-javascript">
+									$(document).ready(function() {
+										$('img.fill').zoomable({
+											position: 'fill'
 										});
 									});
 								</code>
@@ -134,34 +208,18 @@
 					<div class="example simple">
 						<h2 class="col-sm-12">Specify Full Size Image</h2>
 						<p class="col-sm-12">
-							You can specify an alternate full size image to load by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> tag:
+							The full sized image can be specified by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element, which is useful for situations where you want to use a different image for the thumbnail.
 						</p>						
-						<div class="col-sm-5">					
-							<img src="http://lorempixel.com/1200/800/?r=3" 
-									 fullsize="http://lorempixel.com/1200/800/?r=3" 
-									 class="thumb simple">		
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('img.fullsize').zoomable();
-								});
-							</script>						 
-						</div>
-						<div class="col-sm-7">
+						<div class="col-sm-12">
 							<pre>
 								<code class="language-html">
 									&ltimg src="image.jpg" fullsize="image_full.jpg"&gt;
 								</code>
-							</pre>
-							<pre>
-								<code class="language-javascript">
-									$(document).ready(function() {
-										$('img').zoomable();
-									});
-								</code>
-							</pre>						
+							</pre>					
 						</div>				
 					</div>
 				</div>
+
 			</section>
 
 			<section class="row">
@@ -194,6 +252,11 @@
 							<td><code>10 px</code></td>
 							<td>minimum padding between the image and the browser window</td>
 						</tr>
+						<tr>
+							<th><kbd>fill</kbd></th>
+							<td><code>true</code></td>
+							<td>If set to true, will cause the image to fill the entire browser window when shown</td>
+						</tr>								
 						<tr>
 							<th><kbd>radius</kbd></th>
 							<td><code>2px</code></td>
