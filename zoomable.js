@@ -117,11 +117,11 @@ function initOptions(options, parent) {
 // Plugin defaults – added as a property on our plugin function.
 $.fn.zoomable.defaults = {
   padding: '30px',
-  bgcolor: 'hsla(0, 4%, 3%, 0.38196601)',
+  bgcolor: 'hsla(0, 4%, 3%, 0.75)',
   //opacity: 1 - 0.61803399,
   //bgcolor: $('body').css('background-color'),
   //opacity: '0.61803399',
-  blur: '3px',
+  blur: '0px',
   speed: 300,
   border: '1px solid hsl(0, 4%, 17%)',
   radius: '2px',
