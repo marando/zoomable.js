@@ -11,7 +11,7 @@ http://marando.github.io/zoomable.js
 Just download `zoomable.js` and place it within your project's directory. That's it!
 ##### With Bower
 ```bash
-$ bower install https://github.com/marando/zoomable.js.git --save
+$ bower install zoomable.js --save
 ```
 
 ### Configuration
