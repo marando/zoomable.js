@@ -108,7 +108,7 @@
       'border': options.border,
       'border-radius': options.radius,
       'box-shadow': options.shadow,
-    });  
+    });
     
     return img;  
   }  
@@ -141,6 +141,23 @@
       'width': '100%',
       'display': 'none',
     });  
+
+    if (options.fill == true) {
+      // Ensure no padding
+      container.css({
+        padding: 0
+      });
+
+      // Remove image from container 
+      container.html('');
+
+      // Set background image
+      container.css({
+        background: 'url(' + options.fullsize + ')', 
+        'background-size': 'cover',
+        'background-position': 'center',
+      });
+    }
 
     // Apply the opacity to the container's color using alpha
     container.css({
@@ -206,7 +223,7 @@
     border: '1px solid hsl(0, 4%, 17%)',
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
-    position: 'center',  // fill, fit, stretch, center
+    position: 'default',  // default, fill
 
     // Events
     onshow: function() { },
