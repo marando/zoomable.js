@@ -48,7 +48,7 @@
 
       <section>         
         <div class="row">         
-          <h1 class="col-sm-12">Examples</h1>
+          <h1 class="col-sm-12">Usage Examples</h1>
           <div class="example simple">
             <h2 class="col-sm-12">Simple Usage</h2>
             <p class="col-sm-12">
@@ -132,7 +132,7 @@
 
         <div class="row">     
           <div class="example custom">
-            <h2 class="col-sm-12">Callbacks</h2>
+            <h2 class="col-sm-12">Callback Functions</h2>
             <p class="col-sm-12">
               Two callback functions are exposed&mdash;one for when the image is show, and another for when it is dismissed:
             </p>            
@@ -172,7 +172,7 @@
           <div class="example">
             <h2 class="col-sm-12">Filling the Browser</h2>
             <p class="col-sm-12">
-              To make an image fill the browser window, set the <code>fill</code> attribute to true:
+              To make an image fill the entire browser window, set the <code>fill</code> attribute to true:
             </p>            
             <div class="col-sm-5">
               <img src="http://lorempixel.com/1200/800/?r=5" 
@@ -206,7 +206,7 @@
 
         <div class="row">         
           <div class="example simple">
-            <h2 class="col-sm-12">Specify Full Size Image</h2>
+            <h2 class="col-sm-12">Alternate Full Size Image</h2>
             <p class="col-sm-12">
               The full sized image can be specified by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element, which is useful for situations where you want to use a different image for the thumbnail.
             </p>            
@@ -224,57 +224,57 @@
 
       <section class="row">
         <div class="col-sm-12">
-          <h1>Documentation</h1>
-          <h2>Options</h2>
+          <h1>API Documentation</h1>
+          <h2>Plugin Options</h2>
           <table class="table table-bordered table-striped">
             <tr>
               <th>Property</th>
-              <th>Sample Value</th>
+              <th>CSS Type</th>
               <th>Description</th>
             </tr>
             <tr>
-              <th><kbd>bgcolor</kbd></th>
-              <td><code>#000</code></td>
-              <td>background color of the area to the sides of the image</td>
+              <th><code>bgcolor</code></th>
+              <td>color</td>
+              <td>Background color around the full image</td>
             </tr>
             <tr>
-              <th><kbd>blur</kbd></th>
-              <td><code>10 px</code></td>
-              <td>blur applied to elements behind the full size image</td>
+              <th><code>blur</code></th>
+              <td>pixels</td>
+              <td>Blur applied to elements behind the full image</td>
             </tr> 
             <tr>
-              <th><kbd>border</kbd></th>
-              <td><code>1px solid #000</code></td>
-              <td>border of the full size image</td>
+              <th><code>border</code></th>
+              <td>border</td>
+              <td>Border size of the full image</td>
             </tr>                     
             <tr>
-              <th><kbd>padding</kbd></th>
-              <td><code>10 px</code></td>
-              <td>minimum padding between the image and the browser window</td>
+              <th><code>padding</code></th>
+              <td>pixels</td>
+              <td>Minimum padding between the full image and the browser window</td>
             </tr>
             <tr>
-              <th><kbd>fill</kbd></th>
-              <td><code>true</code></td>
-              <td>If set to true, will cause the image to fill the entire browser window when shown</td>
+              <th><code>fill</code></th>
+              <td>boolean</td>
+              <td>If the full image should fill the browser window or not</td>
             </tr>               
             <tr>
-              <th><kbd>radius</kbd></th>
-              <td><code>2px</code></td>
-              <td>border radius of fullsize image</td>
+              <th><code>radius</code></th>
+              <td>pixels</td>
+              <td>Border radius of the full image</td>
             </tr> 
             <tr>
-              <th><kbd>shadow</kbd></th>
-              <td><code>0 0 14px #000</code></td>
-              <td>shadow behind the image border</td>
+              <th><code>shadow</code></th>
+              <td>box-shadow</td>
+              <td>Shadow behind the full image</td>
             </tr> 
             <tr>
-              <th><kbd>speed</kbd></th>
-              <td><code>200</code></td>
-              <td>speed of fade transitions</td>
+              <th><code>spee</code></th>
+              <td>integer</td>
+              <td>Speed of CSS fade transitions</td>
             </tr>           
           </table>  
 
-          <h2>Callbacks</h2>      
+          <h2>Plugin Callbacks</h2>      
           <table class="table table-bordered table-striped">
             <tr>
               <th>Property</th>
@@ -282,14 +282,14 @@
               <th>Description</th>
             </tr>
             <tr>
-              <td><kbd>onshow</kbd></td>
+              <td><code>onshow</code></td>
               <td>function</td>
-              <td>to be called when the image is shown</td>
+              <td>Called when the full image is shown</td>
             </tr>
             <tr>
-              <td><kbd>onhide</kbd></td>
+              <td><code>onhide</code></td>
               <td>function</td>
-              <td>to be called when the image is hidden/dismissed.</td>
+              <td>Called when the full image is dismissed</td>
             </tr>
           </table>
         </div>        
@@ -354,10 +354,10 @@
       //display: none;
     }
     table td:nth-child(2) {
-      font-family: 'Roboto Mono';
+      //font-family: 'Roboto Mono';
       white-space: nowrap;
-      font-size: 14px;
-      font-weight: 700;
+      //font-size: 14px;
+      //font-weight: 700;
     }
     section {
       padding-bottom: 30px;
