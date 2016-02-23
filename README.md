@@ -9,7 +9,7 @@ http://marando.github.io/zoomable.js
 ### Installation
 
 #### With Bower
-```
+```bash
 $ bower install https://github.com/marando/zoomable.js.git --save
 ```
 
