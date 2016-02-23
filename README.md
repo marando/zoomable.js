@@ -19,7 +19,7 @@ $ bower install https://github.com/marando/zoomable.js.git --save
 Include both the `jQuery` and `zoomable.js` scripts:
 ```html
 <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script src="zoomable.js"></script>
+<script src="zoomable.min.js"></script>
 ```
 Then call the plugin:
 ```javascript
