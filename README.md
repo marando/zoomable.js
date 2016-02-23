@@ -2,7 +2,7 @@
 ===============
 zoomable.js is a simple way to zoom images with jQuery.
 
-### Demo & Examples
+### Demos & Examples
 http://marando.github.io/zoomable.js
 
 
