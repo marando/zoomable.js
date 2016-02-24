@@ -186,11 +186,10 @@
       // Get dimensions of full image
       var fullWidth;
       var fullHeight;
-      $('<img src="'+options.fullsize+'"/>').load(function(){
-        var fullWidth = this.width; 
-        var fullHeight = this.height;
+      var img = $('<img src="'+options.fullsize+'"/>').load(function(){
+        fullWidth = this.width; 
+        fullHeight = this.height;
       });
-
       // Mouse moved event
       container.mousemove(function(e){
         // Get mouse position within container relative to container 
