@@ -12,306 +12,310 @@
     <script src="prism/prism.js"></script>
   </head>
   <body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
-		  <div class="container">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="#">zoomable.js</a>
-		    </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">zoomable.js</a>
+        </div>
 
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav">     
-		      </ul>    
-		      <ul class="nav navbar-nav navbar-right">
-		        <li class="active"><a href="#">Examples <span class="sr-only">(current)</span></a></li>
-		        <li><a href="https://github.com/marando/zoomable.js">GitHub</a></li>         
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">     
+          </ul>    
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="#examples">Examples <span class="sr-only">(current)</span></a></li>
+            <li><a href="#api-documentation">Documentation</a></li>
+            <li><a href="https://github.com/marando/zoomable.js">GitHub</a></li>         
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
 
-		<div class="container">		
-			<div class="page-header">
-		  	<h1>zoomable.js <small>examples</small></h1>
-			</div>
-
-			<p class="lead">
-				zoomable.js is a simple way to zoom images with jQuery.
-			</p>
-
-			<section>					
-				<div class="row">					
-					<h1 class="col-sm-12">Examples</h1>
-					<div class="example simple">
-						<h2 class="col-sm-12">Simple Usage</h2>
-						<p class="col-sm-12">
-							In the below example the plugin is applied to all <code>&lt;img&gt;</code> elements on the page. The plugin will use each element's <code>src</code> property for full-size image.
-						</p>						
-						<div class="col-sm-5">					
-							<img src="http://lorempixel.com/1200/800/?r=1" 
-									 class="thumb simple">		
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('img.simple').zoomable();
-								});
-							</script>						 
-						</div>
-						<div class="col-sm-7">
-							<pre>
-								<code class="language-html">
-									&ltimg src="image.jpg"&gt;
-								</code>
-							</pre>
-							<pre>
-								<code class="language-javascript">
-									$(document).ready(function() {
-										$('img').zoomable();
-									});
-								</code>
-							</pre>						
-						</div>				
-					</div>
-				</div>
-
-				<div class="row">			
-					<div class="example custom">
-						<h2 class="col-sm-12">Custom Options</h2>
-						<p class="col-sm-12">
-							In this example the plugin is applied using custom options to change the default appearance:
-						</p>						
-						<div class="col-sm-5">
-							<img src="http://lorempixel.com/1200/800/?r=2" 
-									 class="thumb custom">		
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('img.custom').zoomable({
-										padding: '60px',
-										bgcolor: 'hsl(0, 1%, 36%)',
-										opacity: 0.9,
-										blur:    '10px',
-										speed:   800,
-										border:  '7px solid #000',
-										radius:  '3px',
-										shadow:  '0 0 23px #000',
-									});
-								});
-							</script>						 
-						</div>
-						<div class="col-sm-7">
-							<pre>
-								<code class="language-html">
-									&ltimg src="image.jpg" class="custom"&gt;
-								</code>
-							</pre>
-							<pre>
-								<code class="language-javascript">
-									$(document).ready(function() {
-										$('img.custom').zoomable({
-											padding: '60px',
-											bgcolor: 'hsl(0, 1%, 36%)',
-											opacity: 0.9,
-											blur:    '10px',
-											speed:   800,
-											border:  '7px solid #000',
-											radius:  '3px',
-											shadow:  '0 0 23px #000',
-										});
-									});
-								</code>
-							</pre>						
-						</div>				
-					</div>
-				</div>
-
-				<div class="row">			
-					<div class="example custom">
-						<h2 class="col-sm-12">Callbacks</h2>
-						<p class="col-sm-12">
-							Two callback functions are exposed&mdash;one for when the image is show, and another for when it is dismissed:
-						</p>						
-						<div class="col-sm-5">
-							<img src="http://lorempixel.com/1200/800/?r=4" 
-									 class="thumb callback">		
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('img.callback').zoomable({
-										onshow:  function() { alert('image shown') },
-										onhide:  function() { alert('image hidden') },
-									});
-								});
-							</script>						 
-						</div>
-						<div class="col-sm-7">
-							<pre>
-								<code class="language-html">
-									&ltimg src="image.jpg" class="custom"&gt;
-								</code>
-							</pre>
-							<pre>
-								<code class="language-javascript">
-									$(document).ready(function() {
-										$('img.custom').zoomable({
-											onshow:  function() { alert('image shown') },
-											onhide:  function() { alert('image hidden') },
-										});
-									});
-								</code>
-							</pre>						
-						</div>				
-					</div>
-				</div>
-
-				<div class="row">			
-					<div class="example">
-						<h2 class="col-sm-12">Filling the Browser</h2>
-						<p class="col-sm-12">
-							To make an image fill the browser window, set the <code>fill</code> attribute to true:
-						</p>						
-						<div class="col-sm-5">
-							<img src="http://lorempixel.com/1200/800/?r=5" 
-									 class="thumb fill">		
-							<script type="text/javascript">
-								$(document).ready(function() {
-									$('img.fill').zoomable({
-										fill: true
-									});
-								});
-							</script>						 
-						</div>
-						<div class="col-sm-7">
-							<pre>
-								<code class="language-html">
-									&ltimg src="image.jpg" class="custom"&gt;
-								</code>
-							</pre>
-							<pre>
-								<code class="language-javascript">
-									$(document).ready(function() {
-										$('img.fill').zoomable({
-											fill: true
-										});
-									});
-								</code>
-							</pre>						
-						</div>				
-					</div>
-				</div>
-
-				<div class="row">					
-					<div class="example simple">
-						<h2 class="col-sm-12">Specify Full Size Image</h2>
-						<p class="col-sm-12">
-							The full sized image can be specified by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element, which is useful for situations where you want to use a different image for the thumbnail.
-						</p>						
-						<div class="col-sm-12">
-							<pre>
-								<code class="language-html">
-									&ltimg src="image.jpg" fullsize="image_full.jpg"&gt;
-								</code>
-							</pre>					
-						</div>				
-					</div>
-				</div>
-
-			</section>
-
-			<section class="row">
-				<div class="col-sm-12">
-					<h1>Documentation</h1>
-					<h2>Options</h2>
-					<table class="table table-bordered table-striped">
-						<tr>
-							<th>Property</th>
-							<th>Sample Value</th>
-							<th>Description</th>
-						</tr>
-						<tr>
-							<th><kbd>bgcolor</kbd></th>
-							<td><code>#000</code></td>
-							<td>background color of the area to the sides of the image</td>
-						</tr>
-						<tr>
-							<th><kbd>blur</kbd></th>
-							<td><code>10 px</code></td>
-							<td>blur applied to elements behind the full size image</td>
-						</tr>	
-						<tr>
-							<th><kbd>border</kbd></th>
-							<td><code>1px solid #000</code></td>
-							<td>border of the full size image</td>
-						</tr>											
-						<tr>
-							<th><kbd>padding</kbd></th>
-							<td><code>10 px</code></td>
-							<td>minimum padding between the image and the browser window</td>
-						</tr>
-						<tr>
-							<th><kbd>fill</kbd></th>
-							<td><code>true</code></td>
-							<td>If set to true, will cause the image to fill the entire browser window when shown</td>
-						</tr>								
-						<tr>
-							<th><kbd>radius</kbd></th>
-							<td><code>2px</code></td>
-							<td>border radius of fullsize image</td>
-						</tr>	
-						<tr>
-							<th><kbd>shadow</kbd></th>
-							<td><code>0 0 14px #000</code></td>
-							<td>shadow behind the image border</td>
-						</tr>	
-						<tr>
-							<th><kbd>speed</kbd></th>
-							<td><code>200</code></td>
-							<td>speed of fade transitions</td>
-						</tr>						
-					</table>	
-
-					<h2>Callbacks</h2>			
-					<table class="table table-bordered table-striped">
-						<tr>
-							<th>Property</th>
-							<th>Type</th>						
-							<th>Description</th>
-						</tr>
-						<tr>
-							<td><kbd>onshow</kbd></td>
-							<td>function</td>
-							<td>to be called when the image is shown</td>
-						</tr>
-						<tr>
-							<td><kbd>onhide</kbd></td>
-							<td>function</td>
-							<td>to be called when the image is hidden/dismissed.</td>
-						</tr>
-					</table>
-				</div>				
-			</section>
+    <div class="container">   
+      <div class="page-header">
+        <h1>zoomable.js</h1>
+      <p class="lead">
+        A simple way to zoom images with jQuery
+      </p>
+      </div>
 
 
-		</div>	
+
+      <section>         
+        <div class="row">         
+          <a name="examples" class="examples"></a>
+          <h1 class="col-sm-12">Examples</h1>
+          <div class="example simple">
+            <h2 class="col-sm-12">Default Configuration</h2>
+            <p class="col-sm-12">
+              The simplest way to use zoomable.js is to call the plugin on any jQuery selector:
+            </p>            
+            <div class="col-sm-5">          
+              <img src="http://lorempixel.com/1200/800/?r=1" 
+                   class="thumb simple">    
+              <script type="text/javascript">
+                $(document).ready(function() {
+                  $('img.simple').zoomable();
+                });
+              </script>            
+            </div>
+            <div class="col-sm-7">
+              <pre>
+                <code class="language-html">
+                  &ltimg src="image.jpg"&gt;
+                </code>
+              </pre>
+              <pre>
+                <code class="language-javascript">
+                  $(document).ready(function() {
+                    $('img').zoomable();
+                  });
+                </code>
+              </pre>            
+            </div>        
+          </div>
+        </div>
+
+        <div class="row">     
+          <div class="example custom">
+            <h2 class="col-sm-12">Custom Options</h2>
+            <p class="col-sm-12">
+              Custom options can be supplied to change the default appearance:
+            </p>            
+            <div class="col-sm-5">
+              <img src="http://lorempixel.com/1200/800/?r=2" 
+                   class="thumb custom">    
+              <script type="text/javascript">
+                $(document).ready(function() {
+                  $('img.custom').zoomable({
+                    padding: '60px',
+                    bgcolor: 'hsl(0, 1%, 36%)',
+                    opacity: 0.9,
+                    blur:    '10px',
+                    speed:   800,
+                    border:  '7px solid #000',
+                    radius:  '3px',
+                    shadow:  '0 0 23px #000',
+                  });
+                });
+              </script>            
+            </div>
+            <div class="col-sm-7">
+              <pre>
+                <code class="language-html">
+                  &ltimg src="image.jpg" class="custom"&gt;
+                </code>
+              </pre>
+              <pre>
+                <code class="language-javascript">
+                  $(document).ready(function() {
+                    $('img.custom').zoomable({
+                      padding: '60px',
+                      bgcolor: 'hsl(0, 1%, 36%)',
+                      opacity: 0.9,
+                      blur:    '10px',
+                      speed:   800,
+                      border:  '7px solid #000',
+                      radius:  '3px',
+                      shadow:  '0 0 23px #000',
+                    });
+                  });
+                </code>
+              </pre>            
+            </div>        
+          </div>
+        </div>
+
+        <div class="row">     
+          <div class="example custom">
+            <h2 class="col-sm-12">Callback Functions</h2>
+            <p class="col-sm-12">
+              Two callback functions are exposed&mdash;one for when the image is show, and another for when it is dismissed:
+            </p>            
+            <div class="col-sm-5">
+              <img src="http://lorempixel.com/1200/800/?r=4" 
+                   class="thumb callback">    
+              <script type="text/javascript">
+                $(document).ready(function() {
+                  $('img.callback').zoomable({
+                    onshow:  function() { alert('image shown') },
+                    onhide:  function() { alert('image hidden') },
+                  });
+                });
+              </script>            
+            </div>
+            <div class="col-sm-7">
+              <pre>
+                <code class="language-html">
+                  &ltimg src="image.jpg"&gt;
+                </code>
+              </pre>
+              <pre>
+                <code class="language-javascript">
+                  $(document).ready(function() {
+                    $('img').zoomable({
+                      onshow:  function() { alert('image shown') },
+                      onhide:  function() { alert('image hidden') },
+                    });
+                  });
+                </code>
+              </pre>            
+            </div>        
+          </div>
+        </div>
+
+        <div class="row">     
+          <div class="example">
+            <h2 class="col-sm-12">Filling the Browser</h2>
+            <p class="col-sm-12">
+              To make an image fill the entire browser window, set the <code>fill</code> attribute to true:
+            </p>            
+            <div class="col-sm-5">
+              <img src="http://lorempixel.com/1200/800/?r=5" 
+                   class="thumb fill">    
+              <script type="text/javascript">
+                $(document).ready(function() {
+                  $('img.fill').zoomable({
+                    fill: true
+                  });
+                });
+              </script>            
+            </div>
+            <div class="col-sm-7">
+              <pre>
+                <code class="language-html">
+                  &ltimg src="image.jpg"&gt;
+                </code>
+              </pre>
+              <pre>
+                <code class="language-javascript">
+                  $(document).ready(function() {
+                    $('img').zoomable({
+                      fill: true
+                    });
+                  });
+                </code>
+              </pre>            
+            </div>        
+          </div>
+        </div>
+
+        <div class="row">         
+          <div class="example simple">
+            <h2 class="col-sm-12">Alternate Full Sized Image</h2>
+            <p class="col-sm-12">
+              An alternate full sized image can be specified by providing a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element:
+            </p>            
+            <div class="col-sm-12">
+              <pre>
+                <code class="language-html">
+                  &ltimg src="image.jpg" fullsize="image_full.jpg"&gt;
+                </code>
+              </pre>          
+            </div>        
+          </div>
+        </div>
+
+      </section>
+
+      <section class="row">
+        <div class="col-sm-12">
+          <a name="api-documentation" class="api-documentation"></a>
+          <h1>Documentation</h1>
+          <h2>Appearance Options</h2>
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th>Property</th>
+              <th>CSS Type</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <th><code>bgcolor</code></th>
+              <td>color</td>
+              <td>Background color around the full image</td>
+            </tr>
+            <tr>
+              <th><code>blur</code></th>
+              <td>pixels</td>
+              <td>Blur applied to elements behind the full image</td>
+            </tr> 
+            <tr>
+              <th><code>border</code></th>
+              <td>border</td>
+              <td>Border size of the full image</td>
+            </tr>                     
+            <tr>
+              <th><code>padding</code></th>
+              <td>pixels</td>
+              <td>Minimum padding between the full image and the browser window</td>
+            </tr>
+            <tr>
+              <th><code>fill</code></th>
+              <td>boolean</td>
+              <td>If the full image should fill the browser window or not</td>
+            </tr>               
+            <tr>
+              <th><code>radius</code></th>
+              <td>pixels</td>
+              <td>Border radius of the full image</td>
+            </tr> 
+            <tr>
+              <th><code>shadow</code></th>
+              <td>box-shadow</td>
+              <td>Shadow behind the full image</td>
+            </tr> 
+            <tr>
+              <th><code>spee</code></th>
+              <td>integer</td>
+              <td>Speed of CSS fade transitions</td>
+            </tr>           
+          </table>  
+
+          <h2>Callback Functions</h2>      
+          <table class="table table-bordered table-striped">
+            <tr>
+              <th>Property</th>
+              <th>Type</th>           
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td><code>onshow</code></td>
+              <td>function</td>
+              <td>Called when the full image is shown</td>
+            </tr>
+            <tr>
+              <td><code>onhide</code></td>
+              <td>function</td>
+              <td>Called when the full image is dismissed</td>
+            </tr>
+          </table>
+        </div>        
+      </section>
 
 
-		<div class="jumbotron footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="footer-header">zoomable.js</div>						
-						<div class="footer-text">&copy; 2015 Ashley Marando</div>
-					</div>
-					<div class="col-sm-6">
-						
-					</div>					
-				</div>
-			</div>
-		</div>
+    </div>  
+
+
+    <div class="jumbotron footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="footer-header">zoomable.js</div>            
+            <div class="footer-text">&copy;2015 Ashley Marando</div>
+          </div>
+          <div class="col-sm-6">
+            
+          </div>          
+        </div>
+      </div>
+    </div>
 
 
   </body>
@@ -321,63 +325,70 @@
   <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700">
   <style type="text/css">
 
-  	body {
-  		font-family: 'Raleway';
-  		padding: 40px 0px 0px;
-  		margin: 0px;
-  	}
-  	pre, code {
-  		font-family: 'Roboto Mono' !important;
-  		font-weight: 500;
-  	}
-  	h2 {
-  		font-weight: 500;
-  	}
-  	h1 {
-  		font-weight: 700;
-  	}
-  	img.thumb {
-  		width: 100%;
-  		margin-bottom: 15px;
-  		border: 1px solid hsla(0, 4%, 12%, 0.09);
-  		border-radius: 2px;
-  	}
-  	.page-header h1 {
-  		font-weight: 800 !important;
-  		font-size: 48px;
-  	}
-  	pre[class*="language-"] {
-  		margin: 0 0 0.5em !important;
-  	}
-  	.navbar-brand {
-  		font-weight: 700;
-  		//display: none;
-  	}
-  	table td:nth-child(2) {
-  		font-family: 'Roboto Mono';
-  		white-space: nowrap;
-  		font-size: 14px;
-  		font-weight: 700;
-  	}
-  	section {
-  		padding-bottom: 30px;
-  	}
-  	.jumbotron.footer {
-  		background-color: hsl(0, 3%, 12%);
-  		color: hsl(0, 3%, 96%);
-  		margin-top: 80px;
-    	margin-bottom: 0px;
-    	padding-bottom: 100px;
-  	}
-  	.footer-header {
-  		font-weight: 800;
-  		font-size: 26px;
-  		margin-bottom: 6px;
-  	}
-  	.footer-text {
-  		color: hsl(0, 3%, 61%);
-  		font-size: 16px;
-  	}
+    body {
+      font-family: 'Raleway';
+      padding: 40px 0px 0px;
+      margin: 0px;
+    }
+    pre, code {
+      font-family: 'Roboto Mono' !important;
+      font-weight: 500;
+    }
+    h2 {
+      font-weight: 300;
+    }
+    h1 {
+      font-weight: 700;
+    }
+    img.thumb {
+      width: 100%;
+      margin-bottom: 15px;
+      border: 1px solid hsla(0, 4%, 12%, 0.09);
+      border-radius: 2px;
+    }
+    .page-header h1 {
+      font-weight: 800 !important;
+      font-size: 48px;
+    }
+    pre[class*="language-"] {
+      margin: 0 0 0.5em !important;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      display: none;
+    }
+    table td:nth-child(2) {
+      //font-family: 'Roboto Mono';
+      white-space: nowrap;
+      //font-size: 14px;
+      //font-weight: 700;
+    }
+    section {
+      padding-bottom: 30px;
+    }
+    .jumbotron.footer {
+      background-color: hsl(0, 3%, 12%);
+      color: hsl(0, 3%, 96%);
+      margin-top: 80px;
+      margin-bottom: 0px;
+      padding-bottom: 100px;
+    }
+    .footer-header {
+      font-weight: 800;
+      font-size: 26px;
+      margin-bottom: 6px;
+    }
+    .footer-text {
+      color: hsl(0, 3%, 61%);
+      font-size: 16px;
+    }
+
+    a.examples, a.api-documentation {
+      display: block;
+      position: relative;
+      top: -50px;
+      visibility: hidden;
+    }
   </style>
 
 </html>

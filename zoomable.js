@@ -37,7 +37,17 @@
         // Check if blur was specified
         if (options.blur && options.blur != '0' && options.blur != '0px') {
           // Blur in
-          animateBlur(this, 0, options.blur, options.speed);
+          $({blurRadius: 0}).animate({blurRadius: options.blur}, {
+            duration: options.speed,
+            easing: 'swing', // or "linear"
+            // use jQuery UI or Easing plugin for more options
+            step: function() {
+              $('.container').css({
+                "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                "filter": "blur(" + this.blurRadius + "px)"
+              });
+            }
+          });
         }
 
         // Prevent scrolling when image shown
@@ -52,7 +62,18 @@
         // Check if blur was specified
         if (options.blur && options.blur != '0' && options.blur != '0px') {
           // Blur in
-          animateBlur(this, options.blur, 0, options.speed);
+          var blurNoPx = options.blur.replace('px', '');
+          $({blurRadius: blurNoPx}).animate({blurRadius: 0}, {
+            duration: options.speed,
+            easing: 'swing', // or "linear"
+            // use jQuery UI or Easing plugin for more options
+            step: function() {
+              $('.container').css({
+                "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                "filter": "blur(" + this.blurRadius + "px)"
+              });
+            }
+          });
         }
 
         // Re-enable body scrolling once image hidden
@@ -178,15 +199,15 @@
    * @param   speed      Speed of the blur transition
    */
   function animateBlur(elem, startSize, endSize, speed) {    
-    startSize = startSize.replace('px', '');
+    startSize = (startSize+'').replace('px', '');
     $({blurRadius: startSize}).animate({blurRadius: endSize}, {
-      duration: speed,
-      easing: 'swing', // or "linear"
+      duration: 4000,
+      easing: 'linear', // or "linear"
       // use jQuery UI or Easing plugin for more options
       step: function() {
         $('.container').css({
-          "-webkit-filter": "blur(" + elem.blurRadius + "px)",
-          "filter": "blur(" + elem.blurRadius + "px)"
+          "-webkit-filter": "blur(" + endSize + ")",
+          "filter": "blur(" + endSize + ")"
         });
       }
     });
