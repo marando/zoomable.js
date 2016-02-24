@@ -191,6 +191,7 @@
           fullWidth = this.width; 
           fullHeight = this.height;
         });
+    
         // Mouse moved event
         container.mousemove(function(e){
           // Get mouse position within container relative to container 
@@ -206,7 +207,7 @@
 
           // Pan the image based on mouse position (percentage of position)
           bgPercentX = 100 * (xpos / fullWidth) / ratiox + '%';
-          bgPercentY = 100 * (ypos / fullWidth) / ratioy + '%';
+          bgPercentY = 100 * (ypos / fullHeight) / ratioy + '%';
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
       }
