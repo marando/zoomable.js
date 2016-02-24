@@ -174,10 +174,44 @@
 
       // Set background image
       container.css({
-        background: 'url(' + options.fullsize + ')', 
-        'background-size': 'cover',
+         background: 'url(' + options.fullsize + ')', 
+        'background-size': 'center',
         'background-position': 'center',
+        'background-repeat': 'none',
       });
+
+      // Begin mouse pan (only do for non mobile)
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
+        container.css({'background-size': 'center'});
+        
+        // Get dimensions of full image
+        var fullWidth;
+        var fullHeight;
+        var img = $('<img src="'+options.fullsize+'"/>').load(function(){
+          fullWidth = this.width; 
+          fullHeight = this.height;
+        });
+        // Mouse moved event
+        container.mousemove(function(e){
+          // Get mouse position within container relative to container 
+          var offset = $(this).offset(); 
+          var xpos   = e.pageX - offset.left;
+          var ypos   = e.pageY - offset.top;
+
+          // Ratio of container to image sizes
+          var contWidth = container.width();
+          var contHeight = container.height();
+          var ratiox = contWidth / fullWidth;
+          var ratioy = contHeight / fullHeight;
+
+          // Pan the image based on mouse position (percentage of position)
+          bgPercentX = 100 * (xpos / fullWidth) / ratiox + '%';
+          bgPercentY = 100 * (ypos / fullWidth) / ratioy + '%';
+          $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
+        }); 
+      }
+      // End mouse pan
+
     }
 
     // Apply the opacity to the container's color using alpha

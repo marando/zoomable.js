@@ -30,8 +30,7 @@
           <ul class="nav navbar-nav">     
           </ul>    
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#examples">Examples <span class="sr-only">(current)</span></a></li>
-            <li><a href="#api-documentation">Documentation</a></li>
+            <li class="active"><a href="#">Examples <span class="sr-only">(current)</span></a></li>
             <li><a href="https://github.com/marando/zoomable.js">GitHub</a></li>         
           </ul>
         </div><!-- /.navbar-collapse -->
@@ -40,22 +39,20 @@
 
     <div class="container">   
       <div class="page-header">
-        <h1>zoomable.js</h1>
-      <p class="lead">
-        A simple way to zoom images with jQuery
-      </p>
+        <h1>zoomable.js <small>demo</small></h1>
       </div>
 
-
+      <p class="lead">
+        zoomable.js is a simple way to zoom images with jQuery.
+      </p>
 
       <section>         
         <div class="row">         
-          <a name="examples" class="examples"></a>
-          <h1 class="col-sm-12">Examples</h1>
+          <h1 class="col-sm-12">Usage Examples</h1>
           <div class="example simple">
-            <h2 class="col-sm-12">Default Configuration</h2>
+            <h2 class="col-sm-12">Simple Usage</h2>
             <p class="col-sm-12">
-              The simplest way to use zoomable.js is to call the plugin on any jQuery selector:
+              In the below example the plugin is applied to all <code>&lt;img&gt;</code> elements on the page. The plugin will use each element's <code>src</code> property for full-size image.
             </p>            
             <div class="col-sm-5">          
               <img src="http://lorempixel.com/1200/800/?r=1" 
@@ -87,7 +84,7 @@
           <div class="example custom">
             <h2 class="col-sm-12">Custom Options</h2>
             <p class="col-sm-12">
-              Custom options can be supplied to change the default appearance:
+              In this example the plugin is applied using custom options to change the default appearance:
             </p>            
             <div class="col-sm-5">
               <img src="http://lorempixel.com/1200/800/?r=2" 
@@ -175,7 +172,7 @@
           <div class="example">
             <h2 class="col-sm-12">Filling the Browser</h2>
             <p class="col-sm-12">
-              To make an image fill the entire browser window, set the <code>fill</code> attribute to true:
+              To make an image fill the entire browser window, set the <code>fill</code> attribute to true. The image will be panned as the mouse is moved within the browser.
             </p>            
             <div class="col-sm-5">
               <img src="http://lorempixel.com/1200/800/?r=5" 
@@ -209,9 +206,9 @@
 
         <div class="row">         
           <div class="example simple">
-            <h2 class="col-sm-12">Alternate Full Sized Image</h2>
+            <h2 class="col-sm-12">Alternate Full Size Image</h2>
             <p class="col-sm-12">
-              An alternate full sized image can be specified by providing a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element:
+              The full sized image can be specified by adding a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element, which is useful for situations where you want to use a different image for the thumbnail.
             </p>            
             <div class="col-sm-12">
               <pre>
@@ -227,9 +224,8 @@
 
       <section class="row">
         <div class="col-sm-12">
-          <a name="api-documentation" class="api-documentation"></a>
-          <h1>Documentation</h1>
-          <h2>Appearance Options</h2>
+          <h1>API Documentation</h1>
+          <h2>Plugin Options</h2>
           <table class="table table-bordered table-striped">
             <tr>
               <th>Property</th>
@@ -278,7 +274,7 @@
             </tr>           
           </table>  
 
-          <h2>Callback Functions</h2>      
+          <h2>Plugin Callbacks</h2>      
           <table class="table table-bordered table-striped">
             <tr>
               <th>Property</th>
@@ -308,7 +304,7 @@
         <div class="row">
           <div class="col-sm-6">
             <div class="footer-header">zoomable.js</div>            
-            <div class="footer-text">&copy;2015 Ashley Marando</div>
+            <div class="footer-text">&copy; 2015 Ashley Marando</div>
           </div>
           <div class="col-sm-6">
             
@@ -335,7 +331,7 @@
       font-weight: 500;
     }
     h2 {
-      font-weight: 300;
+      font-weight: 500;
     }
     h1 {
       font-weight: 700;
@@ -355,7 +351,7 @@
     }
     .navbar-brand {
       font-weight: 700;
-      display: none;
+      //display: none;
     }
     table td:nth-child(2) {
       //font-family: 'Roboto Mono';
@@ -381,13 +377,6 @@
     .footer-text {
       color: hsl(0, 3%, 61%);
       font-size: 16px;
-    }
-
-    a.examples, a.api-documentation {
-      display: block;
-      position: relative;
-      top: -50px;
-      visibility: hidden;
     }
   </style>
 
