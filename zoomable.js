@@ -182,12 +182,16 @@
 
       // Begin mouse pan
       container.css({'background-size': 'center'});
-        var fullWidth;
-        var fullHeight;
-        var img = $('<img src="'+options.fullsize+'"/>').load(function(){
+      
+      // Get size of full image
+      var fullWidth;
+      var fullHeight;
+      $('<img src="'+options.fullsize+'"/>').load(function(){
         var fullWidth = this.width; 
         var fullHeight = this.height;
       });
+
+      // Mouse moved event
       container.mousemove(function(e){
         // Get mouse position within container relative to container 
         var offset = $(this).offset(); 
