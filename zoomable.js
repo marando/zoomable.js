@@ -183,7 +183,7 @@
       // Begin mouse pan
       container.css({'background-size': 'center'});
       
-      // Get size of full image
+      // Get dimensions of full image
       var fullWidth;
       var fullHeight;
       $('<img src="'+options.fullsize+'"/>').load(function(){
