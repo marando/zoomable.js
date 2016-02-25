@@ -58,6 +58,7 @@
             initBeta  = e.beta;
             initGamma = e.gamma;
           }
+          alert(initBeta + ' ' + initGamma);
         }
 
         // Prevent scrolling when image shown
@@ -227,8 +228,6 @@
         window.ondeviceorientation = function(e) {
           // Adjust the gyroscope sensitivity (values from 0 to 1)
           var sensitivity = 0.2; 
-
-alert(initBeta + ' ' + initGamma);
 
           // Figure out CSS position from mobile gyroscope
           var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
