@@ -182,7 +182,11 @@
 
       // Begin image pan (check for non mobile)
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
-        container.css({'background-size': 'center'});
+        container.css({
+          'background-size': 'center',
+          'background-repeat': 'none',
+        });
+
         
         // Get dimensions of full image
         var fullWidth;
