@@ -214,13 +214,11 @@
         // todo: figure out gyroscope for mobile
         window.ondeviceorientation = function(e) {
           var bgPercentX;
-          var bgPercentY = '50%';
+          var bgPercentY;
 
-          if (e.gamma >= 0)
             bgPercentX = 100 * e.gamma / 90 + '%';
-          else 
-            bgPercentX = -100 * e.gamma / 90 + '%';
-
+            bgPercentY = 100 * e.beta / 90 + '%';
+    
           //$('body').html(bgPercentX + " " + bgPercentY);
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
           
