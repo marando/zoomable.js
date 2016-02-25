@@ -9,6 +9,9 @@
 
 (function( $ ) {
 
+  var initGamma;
+  var initBeta;
+
   /**
    * zoomable.js jQuery plugin declaration
    * 
@@ -48,6 +51,13 @@
               });
             }
           });
+        }
+
+        window.ondeviceorientation = function(e) {
+          if (initBeta == '') {
+            initBeta  = e.beta;
+            initGamma = e.gamma;
+          }
         }
 
         // Prevent scrolling when image shown
@@ -177,16 +187,12 @@
          background: 'url(' + options.fullsize + ')', 
         'background-size': 'center',
         'background-position': 'center',
-        'background-repeat': 'none',
+        'background-repeat': 'no-repeat',
       });
 
       // Begin image pan (check for non mobile)
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
-        container.css({
-          'background-size': 'center',
-          'background-repeat': 'none',
-        });
-
+        container.css({'background-size': 'center'});
         
         // Get dimensions of full image
         var fullWidth;
@@ -221,6 +227,8 @@
         window.ondeviceorientation = function(e) {
           // Adjust the gyroscope sensitivity (values from 0 to 1)
           var sensitivity = 0.2; 
+
+alert(initBeta + ' ' + initGamma);
 
           // Figure out CSS position from mobile gyroscope
           var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
