@@ -67,6 +67,10 @@
 
       // Container click event (dismiss full size image)
       container.click(function() {
+        // Reset initial gyro position
+        initBeta  = '';
+        initGamma = '';
+                
         // Fade out the container
         $(this).fadeOut(options.speed, options.onhide);
         
@@ -234,10 +238,6 @@
           var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
 
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
-          
-          // Reset initial gyro position
-          initBeta  = '';
-          initGamma = '';
         }
       }
       // End image Pan
