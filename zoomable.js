@@ -9,6 +9,9 @@
 
 (function( $ ) {
 
+  var initGamma;
+  var initBeta; 
+
   /**
    * zoomable.js jQuery plugin declaration
    * 
@@ -49,6 +52,14 @@
             }
           });
         }
+
+        window.ondeviceorientation = function(e) {
+          initGamma = e.gamma;
+          initBeta  = e.beta;
+          window.ondeviceorientation = null;
+        }
+
+        alert(initGamma + ' ' + initBeta);
 
         // Prevent scrolling when image shown
         disableBodyScroll();
