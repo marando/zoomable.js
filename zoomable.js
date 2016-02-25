@@ -9,8 +9,8 @@
 
 (function( $ ) {
 
-  var initGamma;
-  var initBeta;
+  var initGamma = '';
+  var initBeta = '';
 
   /**
    * zoomable.js jQuery plugin declaration
