@@ -9,9 +9,6 @@
 
 (function( $ ) {
 
-  var initGamma = '';
-  var initBeta = '';
-
   /**
    * zoomable.js jQuery plugin declaration
    * 
@@ -53,24 +50,12 @@
           });
         }
 
-        window.ondeviceorientation = function(e) {
-          if (initBeta == '') {
-            initBeta  = e.beta;
-            initGamma = e.gamma;
-            alert(initBeta + ' ' + initGamma);
-          }
-        }
-
         // Prevent scrolling when image shown
         disableBodyScroll();
       });
 
       // Container click event (dismiss full size image)
       container.click(function() {
-        // Reset initial gyro position
-        initBeta  = '';
-        initGamma = '';
-                
         // Fade out the container
         $(this).fadeOut(options.speed, options.onhide);
         
@@ -238,6 +223,7 @@
           var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
 
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
+          
         }
       }
       // End image Pan
