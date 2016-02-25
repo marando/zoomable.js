@@ -221,7 +221,7 @@
           else 
             bgPercentX = -100 * e.gamma / 90 + '%';
 
-          $('body').html(bgPercentX + " " + bgPercentY);
+          //$('body').html(bgPercentX + " " + bgPercentY);
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }
       }
