@@ -235,6 +235,9 @@
 
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
           
+          // Reset initial gyro position
+          initBeta  = '';
+          initGamma = '';
         }
       }
       // End image Pan
