@@ -180,7 +180,7 @@
         'background-repeat': 'none',
       });
 
-      // Begin mouse pan (only do for non mobile)
+      // Begin image pan (check for non mobile)
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
         container.css({'background-size': 'center'});
         
@@ -211,20 +211,22 @@
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
       } else {
-        // todo: figure out gyroscope for mobile
+        // Use Gyroscope for mobile
+        // TODO: have initial gyroscope position on full image show
+        //   be the calibrated initial reference point
         window.ondeviceorientation = function(e) {
-          var bgPercentX;
-          var bgPercentY;
+          // Adjust the gyroscope sensitivity (values from 0 to 1)
+          var sensitivity = 0.2; 
 
-            bgPercentX = 100 * e.gamma / 90 + '%';
-            bgPercentY = 100 * e.beta / 90 + '%';
-    
-          //$('body').html(bgPercentX + " " + bgPercentY);
+          // Figure out CSS position from mobile gyroscope
+          var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
+          var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
+
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
           
         }
       }
-      // End mouse pan
+      // End image Pan
 
     }
 
