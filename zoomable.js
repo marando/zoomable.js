@@ -57,8 +57,8 @@
           if (initBeta == '') {
             initBeta  = e.beta;
             initGamma = e.gamma;
+            alert(initBeta + ' ' + initGamma);
           }
-          alert(initBeta + ' ' + initGamma);
         }
 
         // Prevent scrolling when image shown
