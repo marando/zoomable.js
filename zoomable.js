@@ -210,6 +210,19 @@
           bgPercentY = 100 * (ypos / fullHeight) / ratioy + '%';
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
+      } else {
+        // todo: figure out gyroscope for mobile
+        window.ondeviceorientation = function(e) {
+          // Adjust the gyroscope sensitivity (values from 0 to 1)
+          var sensitivity = 0.5; 
+
+          // Figure out CSS position from mobile gyroscope
+          var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
+          var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
+
+          container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
+          
+        }
       }
       // End mouse pan
 
