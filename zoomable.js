@@ -193,7 +193,7 @@
         });
     
         // Mouse moved event
-        container.bind('mousemove', function(e){
+        container.mousemove(function(e){
           // Get mouse position within container relative to container 
           var offset = $(this).offset(); 
           var xpos   = e.pageX - offset.left;
@@ -210,6 +210,19 @@
           bgPercentY = 100 * (ypos / fullHeight) / ratioy + '%';
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
+      } else {
+        // todo: figure out gyroscope for mobile
+        window.ondeviceorientation = function(e) {
+          var bgPercentX;
+          var bgPercentY;
+
+          if (e.gamma >= 0)
+            bgPercentX = 100 * e.gamma / 90 + '%';
+          else 
+            bgPercentX = -100 * e.gamma / 90 + '%';
+
+          $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
+        }
       }
       // End mouse pan
 
