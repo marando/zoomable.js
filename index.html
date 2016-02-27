@@ -1,401 +1,315 @@
-<html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=yes">  
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script src="zoomable.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+/*!
+ * zoomable.js
+ * https://github.com/marando/zoomable.js/
+ *
+ * Copyright Ashley Marando
+ * Released under the GNU2 license
+ * 
+ */
 
-    <link rel="stylesheet" type="text/css" href="prism.css">
-    <script src="prism.js"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">zoomable.js</a>
-        </div>
+(function( $ ) {
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">     
-          </ul>    
-          <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="#examples">Examples <span class="sr-only">(current)</span></a></li>
-            <li><a href="#api-documentation">Documentation</a></li>
-            <li><a href="https://github.com/marando/zoomable.js">GitHub</a></li>         
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+  /**
+   * zoomable.js jQuery plugin declaration
+   * 
+   * @param  options  Custom initialization options
+   */
+  jQuery.fn.zoomable = function(options) {
 
-    <div class="container">   
-      <div class="page-header">
-        <h1>zoomable.js</h1>
-      <p class="lead">
-        A simple way to zoom images with jQuery
-      </p>
-      </div>
+    // Process each element
+    $(this).each(function() {
 
+      // Initialize options
+      options = initOptions(options, $(this));
 
+      // Preload images
+      $('<img/>').src = options.fullsize;
 
-      <section>         
-        <div class="row">         
-          <a name="examples" class="examples"></a>
-          <h1 class="col-sm-12">Examples</h1>
-          <div class="example simple">
-            <h2 class="col-sm-12">Default Configuration</h2>
-            <p class="col-sm-12">
-              The simplest way to use zoomable.js is to call the plugin on any jQuery selector:
-            </p>            
-            <div class="col-sm-5">          
-              <img src="http://lorempixel.com/1200/800/?r=1" 
-                   class="thumb simple">    
-              <script type="text/javascript">
-                $(document).ready(function() {
-                  $('img.simple').zoomable();
-                });
-              </script>            
-            </div>
-            <div class="col-sm-7">
-              <pre>
-                <code class="language-html">
-                  &ltimg src="image.jpg"&gt;
-                </code>
-              </pre>
-              <pre>
-                <code class="language-javascript">
-                  $(document).ready(function() {
-                    $('img').zoomable();
-                  });
-                </code>
-              </pre>            
-            </div>        
-          </div>
-        </div>
+      // Create components
+      var img       = createImgComponent(options);
+      var container = createContainerComponent(options, img);
 
-        <div class="row">     
-          <div class="example custom">
-            <h2 class="col-sm-12">Custom Options</h2>
-            <p class="col-sm-12">
-              Custom options can be supplied to change the default appearance:
-            </p>            
-            <div class="col-sm-5">
-              <img src="http://lorempixel.com/1200/800/?r=2" 
-                   class="thumb custom">    
-              <script type="text/javascript">
-                $(document).ready(function() {
-                  $('img.custom').zoomable({
-                    padding: '60px',
-                    bgcolor: 'hsl(0, 1%, 36%)',
-                    opacity: 0.9,
-                    blur:    '10px',
-                    speed:   800,
-                    border:  '7px solid #000',
-                    radius:  '3px',
-                    shadow:  '0 0 23px #000',
-                    context: false
-                  });
-                });
-              </script>            
-            </div>
-            <div class="col-sm-7">
-              <pre>
-                <code class="language-html">
-                  &ltimg src="image.jpg" class="custom"&gt;
-                </code>
-              </pre>
-              <pre>
-                <code class="language-javascript">
-                  $(document).ready(function() {
-                    $('img.custom').zoomable({
-                      padding: '60px',
-                      bgcolor: 'hsl(0, 1%, 36%)',
-                      opacity: 0.9,
-                      blur:    '10px',
-                      speed:   800,
-                      border:  '7px solid #000',
-                      radius:  '3px',
-                      shadow:  '0 0 23px #000',
-                      context: false
-                    });
-                  });
-                </code>
-              </pre>            
-            </div>        
-          </div>
-        </div>
+      // Thumb click event (shows full size image)
+      $(this).click(function() {
+        // Fade in the container
+        container.appendTo('body').fadeIn(options.speed, options.onshow);
+        
+        // Check if blur was specified
+        if (options.blur && options.blur != '0' && options.blur != '0px') {
+          // Blur in
+          $({blurRadius: 0}).animate({blurRadius: options.blur}, {
+            duration: options.speed,
+            easing: 'swing', // or "linear"
+            // use jQuery UI or Easing plugin for more options
+            step: function() {
+              $('.container').css({
+                "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                "filter": "blur(" + this.blurRadius + "px)"
+              });
+            }
+          });
+        }
 
-        <div class="row">     
-          <div class="example custom">
-            <h2 class="col-sm-12">Callback Functions</h2>
-            <p class="col-sm-12">
-              Two callback functions are exposed&mdash;one for when the image is show, and another for when it is dismissed:
-            </p>            
-            <div class="col-sm-5">
-              <img src="http://lorempixel.com/1200/800/?r=4" 
-                   class="thumb callback">    
-              <script type="text/javascript">
-                $(document).ready(function() {
-                  $('img.callback').zoomable({
-                    onshow:  function() { alert('image shown') },
-                    onhide:  function() { alert('image hidden') },
-                  });
-                });
-              </script>            
-            </div>
-            <div class="col-sm-7">
-              <pre>
-                <code class="language-html">
-                  &ltimg src="image.jpg"&gt;
-                </code>
-              </pre>
-              <pre>
-                <code class="language-javascript">
-                  $(document).ready(function() {
-                    $('img').zoomable({
-                      onshow:  function() { alert('image shown') },
-                      onhide:  function() { alert('image hidden') },
-                    });
-                  });
-                </code>
-              </pre>            
-            </div>        
-          </div>
-        </div>
+        // Prevent scrolling when image shown
+        disableBodyScroll();
+      });
 
-        <div class="row">     
-          <div class="example">
-            <h2 class="col-sm-12">Filling the Browser</h2>
-            <p class="col-sm-12">
-              To make an image fill the entire browser window, set the <code>fill</code> attribute to true:
-            </p>            
-            <div class="col-sm-5">
-              <img src="http://lorempixel.com/1200/800/?r=5" 
-                   class="thumb fill">    
-              <script type="text/javascript">
-                $(document).ready(function() {
-                  $('img.fill').zoomable({
-                    fill: true
-                  });
-                });
-              </script>            
-            </div>
-            <div class="col-sm-7">
-              <pre>
-                <code class="language-html">
-                  &ltimg src="image.jpg"&gt;
-                </code>
-              </pre>
-              <pre>
-                <code class="language-javascript">
-                  $(document).ready(function() {
-                    $('img').zoomable({
-                      fill: true
-                    });
-                  });
-                </code>
-              </pre>            
-            </div>        
-          </div>
-        </div>
+      // Container click event (dismiss full size image)
+      container.click(function() {
+        // Fade out the container
+        $(this).fadeOut(options.speed, options.onhide);
+        
+        // Check if blur was specified
+        if (options.blur && options.blur != '0' && options.blur != '0px') {
+          // Blur in
+          var blurNoPx = options.blur.replace('px', '');
+          $({blurRadius: blurNoPx}).animate({blurRadius: 0}, {
+            duration: options.speed,
+            easing: 'swing', // or "linear"
+            // use jQuery UI or Easing plugin for more options
+            step: function() {
+              $('.container').css({
+                "-webkit-filter": "blur(" + this.blurRadius + "px)",
+                "filter": "blur(" + this.blurRadius + "px)"
+              });
+            }
+          });
+        }
 
-        <div class="row">         
-          <div class="example simple">
-            <h2 class="col-sm-12">Alternate Full Sized Image</h2>
-            <p class="col-sm-12">
-              An alternate full sized image can be specified by providing a <code>fullsize</code> attribute on the <code>&lt;img&gt;</code> element:
-            </p>            
-            <div class="col-sm-12">
-              <pre>
-                <code class="language-html">
-                  &ltimg src="image.jpg" fullsize="image_full.jpg"&gt;
-                </code>
-              </pre>          
-            </div>        
-          </div>
-        </div>
+        // Re-enable body scrolling once image hidden
+        enableBodyScroll();
+      });
 
-      </section>
+    });
 
-      <section class="row">
-        <div class="col-sm-12">
-          <a name="api-documentation" class="api-documentation"></a>
-          <h1>Documentation</h1>
-          <h2>Appearance Options</h2>
-          <table class="table table-bordered table-striped">
-            <tr>
-              <th>Property</th>
-              <th>CSS Type</th>
-              <th>Description</th>
-            </tr>
-            <tr>
-              <th><code>bgcolor</code></th>
-              <td>color</td>
-              <td>Background color around the full image</td>
-            </tr>
-            <tr>
-              <th><code>blur</code></th>
-              <td>pixels</td>
-              <td>Blur applied to elements behind the full image</td>
-            </tr> 
-            <tr>
-              <th><code>border</code></th>
-              <td>border</td>
-              <td>Border size of the full image</td>
-            </tr>
-            <tr>
-              <th><code>context</code></th>
-              <td>boolean</td>
-              <td>If the context menu should be allowed for the full image</td>
-            </tr>                                    
-            <tr>
-              <th><code>padding</code></th>
-              <td>pixels</td>
-              <td>Minimum padding between the full image and the browser window</td>
-            </tr>
-            <tr>
-              <th><code>fill</code></th>
-              <td>boolean</td>
-              <td>If the full image should fill the browser window or not</td>
-            </tr>               
-            <tr>
-              <th><code>radius</code></th>
-              <td>pixels</td>
-              <td>Border radius of the full image</td>
-            </tr> 
-            <tr>
-              <th><code>shadow</code></th>
-              <td>box-shadow</td>
-              <td>Shadow behind the full image</td>
-            </tr> 
-            <tr>
-              <th><code>speed</code></th>
-              <td>integer</td>
-              <td>Speed of CSS fade transitions</td>
-            </tr>           
-          </table>  
+  };
 
-          <h2>Callback Functions</h2>      
-          <table class="table table-bordered table-striped">
-            <tr>
-              <th>Property</th>
-              <th>Type</th>           
-              <th>Description</th>
-            </tr>
-            <tr>
-              <td><code>onshow</code></td>
-              <td>function</td>
-              <td>Called when the full image is shown</td>
-            </tr>
-            <tr>
-              <td><code>onhide</code></td>
-              <td>function</td>
-              <td>Called when the full image is dismissed</td>
-            </tr>
-          </table>
-        </div>        
-      </section>
+  /**
+   * Uses default plugin options for those that are not passed in.
+   * 
+   * @param  options  User supplied options
+   * @param  parent   Element being processed
+   * 
+   * @return The processed options
+   */
+  function initOptions(options, parent) {
+    // Use default options if none were passed on call
+    options = $.extend({}, $.fn.zoomable.defaults, options);
 
-
-    </div>  
-
-
-    <div class="jumbotron footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="footer-header">zoomable.js</div>            
-            <div class="footer-text">&copy;2015 Ashley Marando</div>
-          </div>
-          <div class="col-sm-6">
-            
-          </div>          
-        </div>
-      </div>
-    </div>
-
-
-  </body>
-
-
-  <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700,800,900">
-  <link rel='stylesheet' type='text/css' href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700">
-  <style type="text/css">
-
-    body {
-      font-family: 'Raleway';
-      padding: 40px 0px 0px;
-      margin: 0px;
-    }
-    pre, code {
-      font-family: 'Roboto Mono' !important;
-      font-weight: 500;
-    }
-    h2 {
-      font-weight: 300;
-    }
-    h1 {
-      font-weight: 700;
-    }
-    img.thumb {
-      width: 100%;
-      margin-bottom: 15px;
-      border: 1px solid hsla(0, 4%, 12%, 0.09);
-      border-radius: 2px;
-    }
-    .page-header h1 {
-      font-weight: 800 !important;
-      font-size: 48px;
-    }
-    pre[class*="language-"] {
-      margin: 0 0 0.5em !important;
-    }
-    .navbar-brand {
-      font-weight: 700;
-      display: none;
-    }
-    table td:nth-child(2) {
-      //font-family: 'Roboto Mono';
-      white-space: nowrap;
-      //font-size: 14px;
-      //font-weight: 700;
-    }
-    section {
-      padding-bottom: 30px;
-    }
-    .jumbotron.footer {
-      background-color: hsl(0, 3%, 12%);
-      color: hsl(0, 3%, 96%);
-      margin-top: 80px;
-      margin-bottom: 0px;
-      padding-bottom: 100px;
-    }
-    .footer-header {
-      font-weight: 800;
-      font-size: 26px;
-      margin-bottom: 6px;
-    }
-    .footer-text {
-      color: hsl(0, 3%, 61%);
-      font-size: 16px;
+    if (parent.attr('fullsize')) {
+      // Use the image's fullsize attribute
+      options.fullsize = parent.attr('fullsize');
+    } else {
+      // Use the image's source
+      options.fullsize = parent.attr('src');
     }
 
-    a.examples, a.api-documentation {
-      display: block;
-      position: relative;
-      top: -50px;
-      visibility: hidden;
-    }
-  </style>
+    return options;
+  }
 
-</html>
+  /**
+   * Creates the <img> component for the full size image.
+   * 
+   * @param   options  User supplied options
+   * @return           Rendered <img> component 
+   */
+  function createImgComponent(options) {
+    // Initialize the fullsize image
+    var img = $('<img />', {
+      'src': options.fullsize,
+    })    
+
+    // Set css styling
+    img.css({
+      'max-height': '100%',
+      'max-width': '100%',
+      'position': 'relative',
+      'top': '50%',
+      'transform': 'translateY(-50%)',
+      'border': options.border,
+      'border-radius': options.radius,
+      'box-shadow': options.shadow,
+    });
+    
+    return img;  
+  }  
+
+  /**
+   * Creates a contianer for the fullsize <img> component
+   * 
+   * @param   options  User supplied options
+   * @param   img      Full size <img> component
+   * 
+   * @return  Rendered container containing the <img> component
+   */
+  function createContainerComponent(options, img) {
+    // Initialize the container for the fullsize image
+    var container = $('<div />', {
+      'class': 'zoomable-container',
+      'html': img,
+    });
+
+    // Set css styling
+    container.css({
+      'background-color': options.bgcolor,
+      'padding': options.padding,
+      'text-align': 'center',
+      'position': 'fixed',
+      'top': '0',
+      'left': '0',
+      'z-index': 9999999,  // Make sure it's always on top
+      'height': '100%',
+      'width': '100%',
+      'display': 'none',
+    });  
+
+    // Disable context menu
+    if (options.context == false) {
+      container.bind('contextmenu', function(e) {
+          return false;
+      });     
+    }
+
+    if (options.fill == true) {
+      // Ensure no padding
+      container.css({
+        padding: 0
+      });
+
+      // Remove image from container 
+      container.html('');
+
+      // Set background image
+      container.css({
+         background: 'url(' + options.fullsize + ')', 
+        'background-size': 'center',
+        'background-position': 'center',
+        'background-repeat': 'none',
+      });
+
+      // Begin mouse pan (only do for non mobile)
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
+        container.css({'background-size': 'center'});
+        
+        // Get dimensions of full image
+        var fullWidth;
+        var fullHeight;
+        var img = $('<img src="'+options.fullsize+'"/>').load(function(){
+          fullWidth = this.width; 
+          fullHeight = this.height;
+        });
+    
+        // Mouse moved event
+        container.mousemove(function(e){
+          // Get mouse position within container relative to container 
+          var offset = $(this).offset(); 
+          var xpos   = e.pageX - offset.left;
+          var ypos   = e.pageY - offset.top;
+
+          // Ratio of container to image sizes
+          var contWidth = container.width();
+          var contHeight = container.height();
+          var ratiox = contWidth / fullWidth;
+          var ratioy = contHeight / fullHeight;
+
+          // Pan the image based on mouse position (percentage of position)
+          bgPercentX = 100 * (xpos / fullWidth) / ratiox + '%';
+          bgPercentY = 100 * (ypos / fullHeight) / ratioy + '%';
+          $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
+        }); 
+      } else {
+        // todo: figure out gyroscope for mobile
+        window.ondeviceorientation = function(e) {
+          // Adjust the gyroscope sensitivity (values from 0 to 1)
+          var sensitivity = 0.5; 
+
+          // Figure out CSS position from mobile gyroscope
+          var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
+          var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
+
+          container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
+          
+        }
+      }
+      // End mouse pan
+
+    }
+
+    // Apply the opacity to the container's color using alpha
+    container.css({
+      'background-color': container.css('background-color')
+        .replace('rgb', 'rgba')
+        .replace(')', '') + ', ' + options.opacity + ')'
+    });    
+    
+    return container;  
+  }
+
+  /**
+   * Applies a blur animation to an element
+   * 
+   * @param   elem       Element to blur
+   * @param   startSize  Starting blur pixel size, e.g. '0px'
+   * @param   endSize    Ending blur pixel size, e.g. '20px'
+   * @param   speed      Speed of the blur transition
+   */
+  function animateBlur(elem, startSize, endSize, speed) {    
+    startSize = (startSize+'').replace('px', '');
+    $({blurRadius: startSize}).animate({blurRadius: endSize}, {
+      duration: 4000,
+      easing: 'linear', // or "linear"
+      // use jQuery UI or Easing plugin for more options
+      step: function() {
+        $('.container').css({
+          "-webkit-filter": "blur(" + endSize + ")",
+          "filter": "blur(" + endSize + ")"
+        });
+      }
+    });
+
+    // Fix iPhone never stops blurring completely
+    if (endSize == 0 || endSize == '0px') {
+      $('.container').css({filter: 'blur(0px)'});
+    }
+  }
+
+  /**
+   * Disables scrolling on the DOM body and hides the scrollbar
+   */
+  function disableBodyScroll() {
+    // Disable body scrolling
+    $('html, body').css({
+      'overflow': 'hidden',
+    });
+  }
+
+  /**
+   * Enables scrolling on the DOM body and shows the scrollbar
+   */
+  function enableBodyScroll() {
+    // Disable body scrolling
+    $('html, body').css({
+      'overflow': 'auto',
+    });
+  }  
+
+  // Plugin defaults
+  $.fn.zoomable.defaults = {
+    // Properties
+    padding: '15px',
+    bgcolor: 'hsl(0, 4%, 3%)',
+    opacity: '0.75',
+    blur: '0px',
+    speed: 250,
+    border: '1px solid hsl(0, 4%, 17%)',
+    radius: '2px',
+    shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
+    fill: false,
+    context: true,
+
+    // Events
+    onshow: function() { },
+    onhide: function() { },
+  };
+
+})( jQuery );
