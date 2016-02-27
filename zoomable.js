@@ -163,6 +163,13 @@
       'display': 'none',
     });  
 
+    // Disable context menu
+    if (options.context == false) {
+      container.bind('contextmenu', function(e) {
+          return false;
+      });     
+    }
+
     if (options.fill == true) {
       // Ensure no padding
       container.css({
@@ -210,6 +217,19 @@
           bgPercentY = 100 * (ypos / fullHeight) / ratioy + '%';
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
+      } else {
+        // todo: figure out gyroscope for mobile
+        window.ondeviceorientation = function(e) {
+          // Adjust the gyroscope sensitivity (values from 0 to 1)
+          var sensitivity = 0.5; 
+
+          // Figure out CSS position from mobile gyroscope
+          var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
+          var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
+
+          container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
+          
+        }
       }
       // End mouse pan
 
@@ -246,6 +266,11 @@
         });
       }
     });
+
+    // Fix iPhone never stops blurring completely
+    if (endSize == 0 || endSize == '0px') {
+      $('.container').css({filter: 'blur(0px)'});
+    }
   }
 
   /**
@@ -280,6 +305,7 @@
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
     fill: false,
+    context: true,
 
     // Events
     onshow: function() { },
