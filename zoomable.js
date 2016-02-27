@@ -163,6 +163,13 @@
       'display': 'none',
     });  
 
+    // Disable context menu
+    if (options.context == false) {
+      container.bind('contextmenu', function(e) {
+          return false;
+      });     
+    }
+
     if (options.fill == true) {
       // Ensure no padding
       container.css({
@@ -259,6 +266,11 @@
         });
       }
     });
+
+    // Fix iPhone never stops blurring completely
+    if (endSize == 0 || endSize == '0px') {
+      $('.container').css({filter: 'blur(0px)'});
+    }
   }
 
   /**
@@ -293,6 +305,7 @@
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
     fill: false,
+    context: true,
 
     // Events
     onshow: function() { },
