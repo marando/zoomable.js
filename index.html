@@ -103,6 +103,7 @@
                     border:  '7px solid #000',
                     radius:  '3px',
                     shadow:  '0 0 23px #000',
+                    context: false
                   });
                 });
               </script>            
@@ -125,6 +126,7 @@
                       border:  '7px solid #000',
                       radius:  '3px',
                       shadow:  '0 0 23px #000',
+                      context: false
                     });
                   });
                 </code>
@@ -250,7 +252,12 @@
               <th><code>border</code></th>
               <td>border</td>
               <td>Border size of the full image</td>
-            </tr>                     
+            </tr>
+            <tr>
+              <th><code>context</code></th>
+              <td>boolean</td>
+              <td>If the context menu should be allowed for the full image</td>
+            </tr>                                    
             <tr>
               <th><code>padding</code></th>
               <td>pixels</td>
@@ -272,7 +279,7 @@
               <td>Shadow behind the full image</td>
             </tr> 
             <tr>
-              <th><code>spee</code></th>
+              <th><code>speed</code></th>
               <td>integer</td>
               <td>Speed of CSS fade transitions</td>
             </tr>           
