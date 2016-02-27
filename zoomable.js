@@ -163,6 +163,13 @@
       'display': 'none',
     });  
 
+    // Disable context menu
+    if (options.context == false) {
+      container.bind('contextmenu', function(e) {
+          return false;
+      });     
+    }
+
     if (options.fill == true) {
       // Ensure no padding
       container.css({
@@ -177,10 +184,10 @@
          background: 'url(' + options.fullsize + ')', 
         'background-size': 'center',
         'background-position': 'center',
-        'background-repeat': 'no-repeat',
+        'background-repeat': 'none',
       });
 
-      // Begin image pan (check for non mobile)
+      // Begin mouse pan (only do for non mobile)
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
         container.css({'background-size': 'center'});
         
@@ -211,12 +218,10 @@
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
       } else {
-        // Use Gyroscope for mobile
-        // TODO: have initial gyroscope position on full image show
-        //   be the calibrated initial reference point
+        // todo: figure out gyroscope for mobile
         window.ondeviceorientation = function(e) {
           // Adjust the gyroscope sensitivity (values from 0 to 1)
-          var sensitivity = 0.2; 
+          var sensitivity = 0.5; 
 
           // Figure out CSS position from mobile gyroscope
           var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
@@ -226,7 +231,7 @@
           
         }
       }
-      // End image Pan
+      // End mouse pan
 
     }
 
@@ -261,6 +266,11 @@
         });
       }
     });
+
+    // Fix iPhone never stops blurring completely
+    if (endSize == 0 || endSize == '0px') {
+      $('.container').css({filter: 'blur(0px)'});
+    }
   }
 
   /**
@@ -295,6 +305,7 @@
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
     fill: false,
+    context: true,
 
     // Events
     onshow: function() { },
