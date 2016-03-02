@@ -56,6 +56,7 @@
         window.ondeviceorientation = function(e) {
           alert(e.gamma + ' ' + e.beta);
         }
+         alert('test');
 
         // Use Gyroscope for mobile
         // TODO: have initial gyroscope position on full image show
