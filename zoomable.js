@@ -52,6 +52,27 @@
 
         // Prevent scrolling when image shown
         disableBodyScroll();
+
+        window.ondeviceorientation = function(e) {
+          alert(e.gamma + ' ' + e.beta);
+        }
+
+        // Use Gyroscope for mobile
+        // TODO: have initial gyroscope position on full image show
+        //   be the calibrated initial reference point
+        window.ondeviceorientation = function(e) {
+          // Adjust the gyroscope sensitivity (values from 0 to 1)
+          var sensitivity = 0.2; 
+
+          // Figure out CSS position from mobile gyroscope
+          var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
+          var bgPercentY  = (1 / sensitivity) * 100 * e.beta / 90 + '%';
+
+          container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
+          
+        }
+
+
       });
 
       // Container click event (dismiss full size image)
@@ -78,6 +99,8 @@
 
         // Re-enable body scrolling once image hidden
         enableBodyScroll();
+
+         window.ondeviceorientation = null;
       });
 
     });
@@ -163,13 +186,6 @@
       'display': 'none',
     });  
 
-    // Disable context menu
-    if (options.context == false) {
-      container.bind('contextmenu', function(e) {
-          return false;
-      });     
-    }
-
     if (options.fill == true) {
       // Ensure no padding
       container.css({
@@ -184,10 +200,10 @@
          background: 'url(' + options.fullsize + ')', 
         'background-size': 'center',
         'background-position': 'center',
-        'background-repeat': 'none',
+        'background-repeat': 'no-repeat',
       });
 
-      // Begin mouse pan (only do for non mobile)
+      // Begin image pan (check for non mobile)
       if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) == false ) {
         container.css({'background-size': 'center'});
         
@@ -218,10 +234,13 @@
           $(this).css({backgroundPosition: bgPercentX + ' ' + bgPercentY });
         }); 
       } else {
-        // todo: figure out gyroscope for mobile
+        // Use Gyroscope for mobile
+        // TODO: have initial gyroscope position on full image show
+        //   be the calibrated initial reference point
+        /*
         window.ondeviceorientation = function(e) {
           // Adjust the gyroscope sensitivity (values from 0 to 1)
-          var sensitivity = 0.5; 
+          var sensitivity = 0.2; 
 
           // Figure out CSS position from mobile gyroscope
           var bgPercentX  = (1 / sensitivity) * 100 * e.gamma / 90 + '%';
@@ -229,9 +248,9 @@
 
           container.css({backgroundPosition: bgPercentX + ' ' + bgPercentY }); 
           
-        }
+        }*/
       }
-      // End mouse pan
+      // End image Pan
 
     }
 
@@ -266,11 +285,6 @@
         });
       }
     });
-
-    // Fix iPhone never stops blurring completely
-    if (endSize == 0 || endSize == '0px') {
-      $('.container').css({filter: 'blur(0px)'});
-    }
   }
 
   /**
@@ -305,7 +319,6 @@
     radius: '2px',
     shadow: '0 0 14px hsla(0, 4%, 3%, 0.33)',
     fill: false,
-    context: true,
 
     // Events
     onshow: function() { },
