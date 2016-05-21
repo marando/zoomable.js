@@ -55,10 +55,9 @@
         disableBodyScroll();
       });
 
-      // Container click event (dismiss full size image)
-      container.click(function() {
+      var dismissContainer = function() {
         // Fade out the container
-        $(this).fadeOut(options.speed, options.onhide);
+        container.fadeOut(options.speed, options.onhide);
         
         // Check if blur was specified
         if (options.blur && options.blur != '0' && options.blur != '0px') {
@@ -79,6 +78,14 @@
 
         // Re-enable body scrolling once image hidden
         enableBodyScroll(original_overflow);
+      };
+      // Container click event (dismiss full size image)
+      container.click(dismissContainer);
+      // Container close on ESC press
+      $(document).keydown(function(e){
+          if (e.keyCode == 27){
+              dismissContainer();
+          }
       });
 
     });
