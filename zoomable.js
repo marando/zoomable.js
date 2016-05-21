@@ -28,6 +28,7 @@
       // Create components
       var img       = createImgComponent(options);
       var container = createContainerComponent(options, img);
+      var original_overflow = $('html, body').css('overflow');
 
       // Thumb click event (shows full size image)
       $(this).click(function() {
@@ -77,7 +78,7 @@
         }
 
         // Re-enable body scrolling once image hidden
-        enableBodyScroll();
+        enableBodyScroll(original_overflow);
       });
 
     });
@@ -286,10 +287,10 @@
   /**
    * Enables scrolling on the DOM body and shows the scrollbar
    */
-  function enableBodyScroll() {
+  function enableBodyScroll(setting) {
     // Disable body scrolling
     $('html, body').css({
-      'overflow': 'auto',
+      'overflow': setting,
     });
   }  
 
